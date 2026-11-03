@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Countdown Numbers Solver – Open-Source JavaScript Demo</title>
+<meta name="description" content="Free open-source Countdown numbers round solver in JavaScript. Enter six numbers and a target to get the shortest exact working, or the closest answer.">
+<link rel="canonical" href="https://digitaldrugofficial-lang.github.io/countdown-numbers-solver/">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=JetBrains+Mono:wght@600;700&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g:#0F3B27;--l:#92FF5F;--w:#F7F9F7;--o:#FF7036;--i:#BFF2F0;--m:#CFF1D2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--g);color:var(--w);font-family:'DM Sans',sans-serif;line-height:1.6}
+.wrap{max-width:860px;margin:0 auto;padding:40px 16px 56px}
+h1{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(34px,6vw,54px);line-height:1.08;letter-spacing:-.03em;margin:0 0 14px}
+h1 span{color:var(--l)}
+h2{font-family:'Sora',sans-serif;font-size:24px;margin:40px 0 10px}
+p{margin:0 0 14px;color:rgba(247,249,247,.82)}
+a{color:var(--l)}
+.card{margin-top:24px;padding:24px;border-radius:26px;background:rgba(255,255,255,.06);border:1px solid rgba(247,249,247,.14)}
+label{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(247,249,247,.7);margin-bottom:8px}
+.nums{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+input{width:100%;height:52px;border-radius:14px;border:1px solid rgba(247,249,247,.25);background:rgba(247,249,247,.06);color:var(--w);font-family:'JetBrains Mono',monospace;font-size:20px;text-align:center}
+.row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.row input{flex:1 1 160px}
+button{height:52px;padding:0 22px;border-radius:14px;border:0;background:var(--l);color:var(--g);font-weight:700;font-size:16px;cursor:pointer;font-family:inherit}
+ol{margin:18px 0 0;padding:18px 22px 18px 40px;border-radius:18px;background:rgba(0,0,0,.22);font-family:'JetBrains Mono',monospace;font-size:17px;line-height:1.9}
+ol:empty{display:none}
+#msg{margin-top:14px;font-weight:600}
+code,pre{font-family:'JetBrains Mono',monospace}
+pre{padding:16px;border-radius:16px;background:rgba(0,0,0,.25);overflow:auto;font-size:14px}
+.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}
+.links a{display:block;padding:18px;border-radius:20px;background:var(--w);color:var(--g);text-decoration:none}
+.links b{display:block;font-family:'Sora',sans-serif}
+.links span{font-size:14px;color:#355847}
+footer{margin-top:48px;font-size:14px;color:rgba(247,249,247,.6)}
+@media(max-width:520px){.nums{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<h1>Countdown Numbers <span>Solver</span></h1>
+<p>An open-source JavaScript solver for the Countdown numbers round. Enter six numbers and a target: it returns the shortest exact working, or the closest number you can reach. The code is on <a href="https://github.com/digitaldrugofficial-lang/countdown-numbers-solver">GitHub</a> under the MIT licence.</p>
+
+<section class="card" aria-label="Solver">
+<label>Your six numbers</label>
+<div class="nums"><input aria-label="Number 1" value="25" inputmode="numeric"><input aria-label="Number 2" value="50" inputmode="numeric"><input aria-label="Number 3" value="75" inputmode="numeric"><input aria-label="Number 4" value="100" inputmode="numeric"><input aria-label="Number 5" value="3" inputmode="numeric"><input aria-label="Number 6" value="6" inputmode="numeric"></div>
+<div class="row"><input id="target" aria-label="Target" value="952" inputmode="numeric"><button id="go" type="button">Solve</button></div>
+<p id="msg" aria-live="polite"></p>
+<ol id="out"></ol>
+</section>
+
+<h2>How it works</h2>
+<p>The solver uses iterative deepening. It tries every one-step answer, then every two-step answer, and so on, so the first exact match uses the fewest operations. Every step must give a positive whole number, and each starting number is used at most once, as on the show.</p>
+<pre>const solve = require('./solver.js');
+solve([25, 50, 75, 100, 3, 6], 952);
+// { value: 952, distance: 0, steps: [...] }</pre>
+
+<h2>More Countdown help</h2>
+<p>This demo solves the numbers round only. For the letters round, the conundrum and practice games, use LetterCracker:</p>
+<div class="links">
+<a href="https://lettercracker.co.uk/countdown-solver/"><b>Countdown Solver</b><span>Letters, numbers and conundrum in one tool</span></a>
+<a href="https://lettercracker.co.uk/countdown-numbers-strategy/"><b>Numbers Strategy</b><span>A five-step method to hit the target</span></a>
+<a href="https://lettercracker.co.uk/countdown-maths/"><b>Countdown Maths</b><span>Build each step against the clock</span></a>
+</div>
+<footer>Made by Muhammad Moazzam at <a href="https://lettercracker.co.uk/">LetterCracker</a>, free British English word puzzle solvers. Not affiliated with Channel 4 or Countdown.</footer>
+</main>
+<script src="solver.js"></script>
+<script>
+(function(){
+var ins=document.querySelectorAll('.nums input'),t=document.getElementById('target'),msg=document.getElementById('msg'),out=document.getElementById('out');
+function run(){var nums=[].map.call(ins,function(i){return parseInt(i.value,10);}).filter(function(n){return n>0;}),target=parseInt(t.value,10);
+out.innerHTML='';if(nums.length<2||!(target>0)){msg.textContent='Enter at least two numbers and a target.';return;}
+var r=countdownSolve(nums,target);
+msg.textContent=r.distance===0?'Exact answer in '+r.steps.length+(r.steps.length===1?' step.':' steps.'):'No exact answer. Closest: '+r.value+', '+r.distance+' away.';
+r.steps.forEach(function(s){var li=document.createElement('li');li.textContent=s;out.appendChild(li);});}
+document.getElementById('go').addEventListener('click',run);run();
+})();
+</script>
+</body>
+</html>
